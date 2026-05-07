@@ -1,9 +1,9 @@
-package pjava;
+package projectJava;
 
 public class Usuario {
-    private String nombre;
-    private String apellido;
-    private String email;
-    private String contrasena;
+     String nombre;
+     String apellido;
+     String email;
+     String contrasena;
 
 }
