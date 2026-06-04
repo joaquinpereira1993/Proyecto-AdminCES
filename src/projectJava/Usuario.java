@@ -1,95 +1,68 @@
 package projectJava;
 
-import java.util.Scanner;
-
 public class Usuario {
-     static String nombre;
-     static String apellido;
-     static String email;
-     static String pais;
-     static String contrasena;
-     public static void main(String[] args) {
 
-          int opcion;
-          do {
-               System.out.println("Elija una opción");
-               System.out.println("1- Login");
-               System.out.println("2- Registro");
-               System.out.println("3- Salir");
-               Scanner scan = new Scanner(System.in);
-               opcion = scan.nextInt();
-               switch (opcion){
-                    case 1:
-                         login();
-                         break;
-                    case 2:
-                         registro();
-                         break;
-                    default:
-                         System.out.println("Saliendo...");
-                         opcion = 3;
-                         break;
-               }
-          } while (opcion != 3);
+     private String nombre;
+     private String apellido;
+     private String email;
+     private String pais;
+     private String contrasena;
+     private String tipo;
 
+     public Usuario(String nombre, String apellido, String email, String pais, String contrasena) {
+          this.nombre = nombre;
+          this.apellido = apellido;
+          this.email = email;
+          this.pais = pais;
+          this.contrasena = contrasena;
+          this.tipo = "Usuario";
      }
 
-     private static void registro() {
-          Scanner scan = new Scanner(System.in);
-          System.out.println("Ingrese nombre:");
-          nombre = scan.nextLine();
-          while (nombre == null || nombre.equals("") || nombre.length() <= 5) {
-               System.out.println("No supera la cantidad minima de caracteres, ingrese nuevamente el nombre:");
-               nombre = scan.nextLine();
-          }
-
-          System.out.println("Ingrese apellido:");
-          apellido = scan.nextLine();
-          while (apellido == null || apellido.equals("")) {
-               System.out.println("No supera la cantidad minima de caracteres, ingrese nuevamente el apellido:");
-               apellido = scan.nextLine();
-          }
-
-          System.out.println("Ingrese email:");
-          email = scan.nextLine();
-          while (email == null || !email.contains("@")) {
-               System.out.println("Formato email incorrecto, ingrese nuevamente el email:");
-               email = scan.nextLine();
-          }
-
-          System.out.println("Ingrese país:");
-          pais = scan.nextLine();
-          while (pais == null || pais.equals("")) {
-               System.out.println("No supera la cantidad minima de caracteres, ingrese nuevamente el pais:");
-               pais = scan.nextLine();
-          }
-
-          System.out.println("Ingrese contraseña:");
-          contrasena = scan.nextLine();
-          while (contrasena == null || contrasena.equals("") || contrasena.length() < 8) {
-               System.out.println("No supera la cantidad minima de caracteres, ingrese nuevamente la contraseña:");
-               contrasena = scan.nextLine();
-          }
-          System.out.println("Registro exitoso:");
+     public String getNombre() {
+          return nombre;
      }
 
-     private static void login() {
-          Scanner scan = new Scanner(System.in);
-          System.out.print("Ingrese nombre de usuario: ");
-          String nombreIngresado = scan.nextLine();
-          System.out.print("Ingrese Contraseña: ");
-          String contrasenaIngresada = scan.nextLine();
-
-          if (nombreIngresado.equals(nombre)) {
-               if (contrasenaIngresada.equals(contrasena)) {
-                    System.out.println("Usuario logueado con exito");
-               } else {
-                    System.out.println("Contraseña incorrecta");
-               }
-          }
-          else {
-               System.out.println("No existe el usuario en el sistema.");
-          }
+     public void setNombre(String nombre) {
+          this.nombre = nombre;
      }
 
+     public String getApellido() {
+          return apellido;
+     }
+
+     public void setApellido(String apellido) {
+          this.apellido = apellido;
+     }
+
+     public String getEmail() {
+          return email;
+     }
+
+     public void setEmail(String email) {
+          this.email = email;
+     }
+
+     public String getPais() {
+          return pais;
+     }
+
+     public void setPais(String pais) {
+          this.pais = pais;
+     }
+
+     public String getContrasena() {
+          return contrasena;
+     }
+
+     public void setContrasena(String contrasena) {
+          this.contrasena = contrasena;
+     }
+
+     public String getTipo() {
+          return tipo;
+     }
+
+     protected void setTipo(String tipo) {
+          this.tipo = tipo;
+     }
 }
