@@ -2,19 +2,18 @@ package projectJava;
 
 public class Tester extends Usuario {
 
-    private String ambiente;
+    private String tipoTester;
 
-    public Tester(String nombre, String apellido, String email, String pais, String contrasena, String ambiente) {
+    public Tester(String nombre, String apellido, String email, String pais, String contrasena, String tipoTester) {
         super(nombre, apellido, email, pais, contrasena);
-        this.ambiente = ambiente;
-        setTipo("Tester");
+        this.tipoTester = tipoTester;
     }
 
-    public String getAmbiente() {
-        return ambiente;
+    public String getTipoTester() {
+        return tipoTester;
     }
 
-    public void setAmbiente(String ambiente) {
-        this.ambiente = ambiente;
+    public void setTipoTester(String tipoTester) {
+        this.tipoTester = tipoTester;
     }
 }

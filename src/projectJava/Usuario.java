@@ -15,7 +15,7 @@ public class Usuario {
           this.email = email;
           this.pais = pais;
           this.contrasena = contrasena;
-          this.tipo = "Usuario";
+          this.tipo = tipo;
      }
 
      public String getNombre() {

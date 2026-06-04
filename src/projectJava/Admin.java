@@ -2,19 +2,19 @@ package projectJava;
 
 public class Admin extends Usuario {
 
-    private int nivelAcceso;
+    private String nivelAcceso;
 
-    public Admin(String nombre, String apellido, String email, String pais, String contrasena, int nivelAcceso) {
+    public Admin(String nombre, String apellido, String email, String pais, String contrasena, String nivelAcceso) {
+
         super(nombre, apellido, email, pais, contrasena);
         this.nivelAcceso = nivelAcceso;
-        setTipo("Admin");
     }
 
-    public int getNivelAcceso() {
+    public String getNivelAcceso() {
         return nivelAcceso;
     }
 
-    public void setNivelAcceso(int nivelAcceso) {
+    public void setNivelAcceso(String nivelAcceso) {
         this.nivelAcceso = nivelAcceso;
     }
 }
