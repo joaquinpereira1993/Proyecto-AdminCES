@@ -18,8 +18,9 @@ public class SistemaUsuarios {
      private void cargarUsuariosPrueba() {
           registrarAdmin("Carlos", "Garcia", "carlos@admin.com", "Argentina", "admin1234", "Alto");
           registrarAdmin("Laura", "Martinez", "laura@admin.com", "Mexico", "admin5678", "Medio");
-          registrarTester("Juan", "Perez", "juan@tester.com", "Argentina", "tester123", "Manual");
-          registrarTester("Joaquin", "Pereira", "joaquin@tester.com", "Colombia", "tester456", "Automatizado");
+          registrarTester("Juan", "Perez", "juan@tester.com", "Argentina", "tester123", "Junior");
+          registrarTester("Joaquin", "Pereira", "joaquin@tester.com", "Uruguay", "tester456", "Senior");
+          registrarTester("Rodrigo", "Gonzalez", "rodrigo@tester.com", "Bolivia", "tester789", "Lider");
           usuarios.add(new Usuario("Pedro", "Ruiz", "pedro@mail.com", "Chile", "pedro1234"));
      }
 
@@ -198,7 +199,7 @@ public class SistemaUsuarios {
 
           } else if (tipoOpcion == 2) {
 
-               System.out.println("Ingrese tipo de tester (Ej: Manual ó Automatizado):");
+               System.out.println("Ingrese tipo de tester (Ej: Junior, Senior ó Lider):");
                String tipoTester = scan.nextLine();
 
                registrarTester(nombre, apellido, email, pais, contrasena, tipoTester);
