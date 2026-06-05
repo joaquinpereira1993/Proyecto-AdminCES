@@ -73,5 +73,6 @@ SistemaUsuarios --> Usuario
 
 Usuario <|-- Admin
 Usuario <|-- Tester
+
+<img width="1141" height="621" alt="UML" src="https://github.com/user-attachments/assets/5a533b45-f1ab-4997-a20e-e9f3fc047914" />
 ```
-<img width="1129" height="579" alt="UML AdminCES OK" src="https://github.com/user-attachments/assets/d71c8ff2-8613-4a30-b754-d17cb390025c" />
