@@ -17,4 +17,8 @@ public class Admin extends Usuario {
     public void setNivelAcceso(String nivelAcceso) {
         this.nivelAcceso = nivelAcceso;
     }
+    @Override
+    public String mostrarRol() {
+        return "Administrador - Nivel: " + nivelAcceso;
+    }
 }

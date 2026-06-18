@@ -2,14 +2,16 @@ package projectJava;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
 
 public class SistemaUsuarios {
 
-     private ArrayList<Usuario> usuarios;
+
+     private List<Usuario> usuarios;
      private Scanner scan;
 
      public SistemaUsuarios() {
-          usuarios = new ArrayList<Usuario>();
+          usuarios = new ArrayList<>();
           scan = new Scanner(System.in);
           cargarUsuariosPrueba();
      }
@@ -21,7 +23,7 @@ public class SistemaUsuarios {
           registrarTester("Juan", "Perez", "juan@tester.com", "Argentina", "tester123", "Junior");
           registrarTester("Joaquin", "Pereira", "joaquin@tester.com", "Uruguay", "tester456", "Senior");
           registrarTester("Rodrigo", "Gonzalez", "rodrigo@tester.com", "Bolivia", "tester789", "Lider");
-          usuarios.add(new Usuario("Pedro", "Ruiz", "pedro@mail.com", "Chile", "pedro1234"));
+          usuarios.add(new UsuarioComun("Pedro", "Ruiz", "pedro@mail.com", "Chile", "pedro1234"));
      }
 
      // Métodos públicos
@@ -63,15 +65,44 @@ public class SistemaUsuarios {
      }
 
      public void listarUsuarios() {
+
           System.out.println("\n--- LISTA DE USUARIOS ---");
+
           for (int i = 0; i < usuarios.size(); i++) {
-               String tipo = "Usuario";
-               if (usuarios.get(i) instanceof Admin) {
-                    tipo = "Administrador";
-               } else if (usuarios.get(i) instanceof Tester) {
-                    tipo = "Tester";
-               }
-               System.out.println((i + 1) + ". " + usuarios.get(i).getNombre() + " " + usuarios.get(i).getApellido() + " | " + usuarios.get(i).getEmail() + " | " + tipo);
+
+               Usuario usuario = usuarios.get(i);
+
+               System.out.println(
+                       (i + 1) + ". "
+                               + usuario.getNombre() + " "
+                               + usuario.getApellido()
+                               + " | "
+                               + usuario.getEmail()
+                               + " | "
+                               + usuario.mostrarRol()
+               );
+          }
+     }
+     public void buscarUsuario() {
+
+          System.out.println("Ingrese email del usuario:");
+
+          String email = scan.nextLine();
+
+          Usuario usuario = buscarPorEmail(email);
+
+          if (usuario != null) {
+
+               System.out.println("\nUsuario encontrado");
+               System.out.println("Nombre: " + usuario.getNombre());
+               System.out.println("Apellido: " + usuario.getApellido());
+               System.out.println("Email: " + usuario.getEmail());
+               System.out.println("Pais: " + usuario.getPais());
+               System.out.println("Rol: " + usuario.mostrarRol());
+
+          } else {
+
+               System.out.println("Usuario no encontrado");
           }
      }
 
@@ -80,30 +111,64 @@ public class SistemaUsuarios {
      public void mostrarMenu() {
           int opcion;
           do {
-               System.out.println("\nElija una opcion");
+               System.out.println("\nMenu Principal");
                System.out.println("1- Login");
                System.out.println("2- Registro");
-               System.out.println("3- Ver lista de usuarios");
-               System.out.println("4- Salir");
+               System.out.println("3- Salir");
+
                opcion = Integer.parseInt(scan.nextLine());
+
                switch (opcion) {
+
                     case 1:
                          menuLogin();
                          break;
+
                     case 2:
                          menuRegistro();
                          break;
+
                     case 3:
-                         listarUsuarios();
-                         break;
-                    case 4:
                          System.out.println("Saliendo...");
                          break;
+
                     default:
                          System.out.println("Opcion invalida");
-                         break;
                }
-          } while (opcion != 4);
+          } while (opcion != 3);
+     }
+     public void menuUsuario() {
+
+          int opcion;
+
+          do {
+
+               System.out.println("\n--- MENU DE USUARIO ---");
+               System.out.println("1- Listar usuarios");
+               System.out.println("2- Buscar usuario");
+               System.out.println("3- Cerrar sesión");
+
+               opcion = Integer.parseInt(scan.nextLine());
+
+               switch (opcion) {
+
+                    case 1:
+                         listarUsuarios();
+                         break;
+
+                    case 2:
+                         buscarUsuario();
+                         break;
+
+                    case 3:
+                         System.out.println("Sesión finalizada.");
+                         break;
+
+                    default:
+                         System.out.println("Opción inválida.");
+               }
+
+          } while (opcion != 3);
      }
 
 // Condiciones lógicas del sistema
@@ -118,29 +183,16 @@ public class SistemaUsuarios {
 
           if (resultado != null) {
 
-               if (resultado instanceof Admin) {
-                    //Mostrar nivel de acceso
-                    Admin admin = (Admin) resultado;
+               System.out.println("\nLogin exitoso.");
+               System.out.println("Bienvenido " + resultado.getNombre());
+               System.out.println(resultado.mostrarRol());
 
-                    System.out.println("Login exitoso. Bienvenido " + admin.getNombre());
-                    System.out.println("Nivel de acceso: " + admin.getNivelAcceso());
-
-               } else if (resultado instanceof Tester) {
-                    // Mostrar tipo de tester
-                    Tester tester = (Tester) resultado;
-
-                    System.out.println("Login exitoso. Bienvenido " + tester.getNombre());
-
-                    System.out.println("Tipo de tester: " + tester.getTipoTester());
-
-               } else {
-
-                    System.out.println("Login exitoso. Bienvenido " + resultado.getNombre());
-               }
+               // MOSTRAR MENÚ DEL USUARIO LOGUEADO
+               menuUsuario();
 
           } else {
 
-               System.out.println("Contrasena incorrecta.");
+               System.out.println("Email o contraseña incorrectos.");
           }
      }
 
@@ -191,18 +243,38 @@ public class SistemaUsuarios {
 
           if (tipoOpcion == 1) {
 
-               System.out.println("Ingrese nivel de acceso:");
+               System.out.println("Ingrese nivel de acceso (Alto o Medio):");
                String nivelAcceso = scan.nextLine();
 
+               while (!nivelAcceso.equalsIgnoreCase("Alto")
+                       && !nivelAcceso.equalsIgnoreCase("Medio")) {
+
+                    System.out.println("Ingrese un nivel de acceso válido (Alto o Medio):");
+                    nivelAcceso = scan.nextLine();
+               }
+
+               // Normalizar formato
+               nivelAcceso = nivelAcceso.substring(0, 1).toUpperCase()
+                       + nivelAcceso.substring(1).toLowerCase();
+
                registrarAdmin(nombre, apellido, email, pais, contrasena, nivelAcceso);
+
                System.out.println("Administrador registrado con exito.");
-
-          } else if (tipoOpcion == 2) {
-
-               System.out.println("Ingrese tipo de tester (Ej: Junior, Senior ó Lider):");
+               }
+               else if (tipoOpcion == 2) {
+               System.out.println("Ingrese tipo de tester (Junior, Senior o Lider):");
                String tipoTester = scan.nextLine();
 
+               while (!tipoTester.equalsIgnoreCase("Junior")
+                       && !tipoTester.equalsIgnoreCase("Senior")
+                       && !tipoTester.equalsIgnoreCase("Lider")) {
+
+                    System.out.println("Ingrese un tipo de tester válido (Junior, Senior o Lider):");
+                    tipoTester = scan.nextLine();
+               }
+
                registrarTester(nombre, apellido, email, pais, contrasena, tipoTester);
+
 
                System.out.println("Tester registrado con exito.");
 

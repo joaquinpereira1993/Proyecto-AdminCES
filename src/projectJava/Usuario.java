@@ -1,6 +1,6 @@
 package projectJava;
 
-public class Usuario {
+public abstract class Usuario {
 
      private String nombre;
      private String apellido;
@@ -17,7 +17,9 @@ public class Usuario {
           this.contrasena = contrasena;
           this.tipo = "Usuario";
      }
+     public abstract String mostrarRol();
 
+     // GETTERS Y SETTERS
      public String getNombre() {
           return nombre;
      }
