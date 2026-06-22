@@ -17,12 +17,14 @@ public class SistemaUsuarios {
 
      // Usuarios precargados
      private void cargarUsuariosPrueba() {
-          registrarAdmin("Carlos", "Garcia", "carlos@admin.com", "Argentina", "admin1234", "Alto");
-          registrarAdmin("Laura", "Martinez", "laura@admin.com", "Mexico", "admin5678", "Medio");
-          registrarTester("Juan", "Perez", "juan@tester.com", "Argentina", "tester123", "Junior");
-          registrarTester("Joaquin", "Pereira", "joaquin@tester.com", "Uruguay", "tester456", "Senior");
-          registrarTester("Rodrigo", "Gonzalez", "rodrigo@tester.com", "Bolivia", "tester789", "Lider");
-          registrarUsuarioComun("Pedro", "Ruiz", "pedro@gmail.com", "Chile", "pedro1234");
+          usuarios.add(new Admin("Carlos", "Garcia", "carlos@admin.com", "Argentina", "admin1234", "Alto"));
+          usuarios.add(new Admin("Laura", "Martinez", "laura@admin.com", "Mexico", "admin5678", "Medio"));
+
+          usuarios.add(new Admin("Juan", "Perez", "juan@tester.com", "Argentina", "tester123", "Junior"));
+          usuarios.add(new Tester("Joaquin", "Pereira", "joaquin@tester.com", "Uruguay", "tester456", "Senior"));
+          usuarios.add(new Tester("Rodrigo", "Gonzalez", "rodrigo@tester.com", "Bolivia", "tester789", "Lider"));
+
+          usuarios.add(new UsuarioComun("Pedro", "Ruiz", "pedro@gmail.com", "Chile", "pedro1234"));
      }
 
      // Métodos públicos
