@@ -6,13 +6,13 @@ public class UsuarioComun extends Usuario {
                         String apellido,
                         String email,
                         String pais,
-                        String contrasena) {
-
+                        String contrasena)
+    {
         super(nombre, apellido, email, pais, contrasena);
     }
 
     @Override
     public String mostrarRol() {
-        return "Usuario Comun";
+        return "Usuario Común";
     }
 }

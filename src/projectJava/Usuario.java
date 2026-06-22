@@ -7,7 +7,6 @@ public abstract class Usuario {
      private String email;
      private String pais;
      private String contrasena;
-     private String tipo;
 
      public Usuario(String nombre, String apellido, String email, String pais, String contrasena) {
           this.nombre = nombre;
@@ -15,8 +14,8 @@ public abstract class Usuario {
           this.email = email;
           this.pais = pais;
           this.contrasena = contrasena;
-          this.tipo = "Usuario";
      }
+
      public abstract String mostrarRol();
 
      // GETTERS Y SETTERS
@@ -58,13 +57,5 @@ public abstract class Usuario {
 
      public void setContrasena(String contrasena) {
           this.contrasena = contrasena;
-     }
-
-     public String getTipo() {
-          return tipo;
-     }
-
-     protected void setTipo(String tipo) {
-          this.tipo = tipo;
      }
 }
