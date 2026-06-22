@@ -11,5 +11,6 @@ Funcionalidades:
 - Ver y editar perfil de usuario admin: Permite ver datos del propio usuario y editarlos.
 - Eliminar usuario: Permite eliminar un usuario de tester
 
-- Diagrama UML actualizado:
+
+Diagrama UML actualizado:
 ![img_1.png](img_1.png)
