@@ -17,27 +17,21 @@ public class SistemaUsuarios {
 
      // Usuarios precargados
      private void cargarUsuariosPrueba() {
-          usuarios.add(new Admin("Carlos", "Garcia", "carlos@admin.com", "Argentina", "admin1234", "Alto"));
-          usuarios.add(new Admin("Laura", "Martinez", "laura@admin.com", "Mexico", "admin5678", "Medio"));
-
-          usuarios.add(new Admin("Juan", "Perez", "juan@tester.com", "Argentina", "tester123", "Junior"));
+          usuarios.add(new Admin("Carlos", "Garcia", "carlos@admin.com", "Argentina", "admin1234"));
+          usuarios.add(new Admin("Laura", "Martinez", "laura@admin.com", "Paraguay", "admin5678"));
+          usuarios.add(new Admin("Juan", "Perez", "juan@tester.com", "Brasil", "admin1993"));
           usuarios.add(new Tester("Joaquin", "Pereira", "joaquin@tester.com", "Uruguay", "tester456", "Senior"));
           usuarios.add(new Tester("Rodrigo", "Gonzalez", "rodrigo@tester.com", "Bolivia", "tester789", "Lider"));
-
-          usuarios.add(new UsuarioComun("Pedro", "Ruiz", "pedro@gmail.com", "Chile", "pedro1234"));
+          usuarios.add(new Tester("Rodrigo", "Gonzalez", "jose@tester.com", "Chile", "", "Junior"));
      }
 
      // Métodos públicos
-     public void registrarAdmin(String nombre, String apellido, String email, String pais, String contrasena, String nivelAcceso) {
-          usuarios.add(new Admin(nombre, apellido, email, pais, contrasena, nivelAcceso));
+     public void registrarAdmin(String nombre, String apellido, String email, String pais, String contrasena) {
+          usuarios.add( new Admin(nombre, apellido, email, pais, contrasena));
      }
 
      public void registrarTester(String nombre, String apellido, String email, String pais, String contrasena, String tipoTester) {
           usuarios.add(new Tester(nombre, apellido, email, pais, contrasena, tipoTester));
-     }
-
-     public void registrarUsuarioComun(String nombre, String apellido, String email, String pais, String contrasena) {
-          usuarios.add(new UsuarioComun(nombre, apellido, email, pais, contrasena));
      }
 
      public boolean existeEmail(String email) {
@@ -60,11 +54,13 @@ public class SistemaUsuarios {
 
      public Usuario login(String email, String contrasena) {
           for (Usuario usuario : usuarios) {
-               if (usuario.getEmail().equalsIgnoreCase(email)
-                       && usuario.getContrasena().equals(contrasena)) {
+
+               if (usuario instanceof Admin && usuario.getEmail().equalsIgnoreCase(email) && usuario.getContrasena().equals(contrasena)) {
+
                     return usuario;
                }
           }
+
           return null;
      }
 
@@ -76,11 +72,15 @@ public class SistemaUsuarios {
                System.out.println(
                        contador + ". "
                                + usuario.getNombre() + " "
+                               + " | "
                                + usuario.getApellido()
                                + " | "
                                + usuario.getEmail()
                                + " | "
+                               + usuario.getPais()
+                               + " | "
                                + usuario.mostrarRol()
+
                );
                contador++;
           }
@@ -136,27 +136,98 @@ public class SistemaUsuarios {
 
           do {
                System.out.println("\n--- MENU DE USUARIO ---");
-               System.out.println("1- Listar usuarios");
-               System.out.println("2- Buscar usuario");
-               System.out.println("3- Cerrar sesión");
+               System.out.println("1- Registrar Tester");
+               System.out.println("2- Listar usuarios");
+               System.out.println("3- Buscar usuario");
+               System.out.println("4- Cerrar sesión");
 
                opcion = Integer.parseInt(scan.nextLine());
 
                switch (opcion) {
                     case 1:
+                         menuRegistroTester();
+                         break;
+
+                    case 2:
                          listarUsuarios();
                          break;
-                    case 2:
+
+                    case 3:
                          buscarUsuario();
                          break;
-                    case 3:
+
+                    case 4:
                          System.out.println("Sesión finalizada.");
                          break;
+
                     default:
                          System.out.println("Opción inválida.");
                }
 
-          } while (opcion != 3);
+          } while (opcion != 4);
+     }
+     private void menuRegistroTester() {
+
+          System.out.println("\n--- REGISTRO DE TESTER ---");
+
+          System.out.println("Ingrese nombre:");
+          String nombre = scan.nextLine();
+          while (nombre.trim().isEmpty()) {
+               System.out.println("El nombre no puede estar vacío:");
+               nombre = scan.nextLine();
+          }
+
+          System.out.println("Ingrese apellido:");
+          String apellido = scan.nextLine();
+          while (apellido.trim().isEmpty()) {
+               System.out.println("El apellido no puede estar vacío:");
+               apellido = scan.nextLine();
+          }
+
+          System.out.println("Ingrese email:");
+          String email = scan.nextLine();
+
+          while (!email.contains("@") || existeEmail(email)) {
+
+               if (existeEmail(email)) {
+                    System.out.println("El email ya está registrado:");
+               } else {
+                    System.out.println("Formato de email incorrecto:");
+               }
+
+               email = scan.nextLine();
+          }
+
+          System.out.println("Ingrese país:");
+          String pais = scan.nextLine();
+
+          while (pais.trim().isEmpty()) {
+               System.out.println("El país no puede estar vacío:");
+               pais = scan.nextLine();
+          }
+
+          System.out.println("Ingrese contraseña:");
+          String contrasena = scan.nextLine();
+
+          while (contrasena.length() < 8) {
+               System.out.println("La contraseña debe tener al menos 8 caracteres:");
+               contrasena = scan.nextLine();
+          }
+
+          System.out.println("Ingrese tipo de tester (Junior, Senior o Lider):");
+          String tipoTester = scan.nextLine();
+
+          while (!tipoTester.equalsIgnoreCase("Junior")
+                  && !tipoTester.equalsIgnoreCase("Senior")
+                  && !tipoTester.equalsIgnoreCase("Lider")) {
+
+               System.out.println("Ingrese un tipo válido (Junior, Senior o Lider):");
+               tipoTester = scan.nextLine();
+          }
+
+          registrarTester(nombre, apellido, email, pais, contrasena, tipoTester);
+
+          System.out.println("\nTester registrado correctamente.");
      }
 
      // Condiciones lógicas del sistema
@@ -181,81 +252,73 @@ public class SistemaUsuarios {
      }
 
      private void menuRegistro() {
-          System.out.println("Que tipo de usuario desea registrar?");
-          System.out.println("1- Administrador");
-          System.out.println("2- Tester");
-          int tipoOpcion = Integer.parseInt(scan.nextLine());
 
-          while (tipoOpcion != 1 && tipoOpcion != 2) {
-               System.out.println("Tipo de usuario invalido. Ingrese 1 para Administrador o 2 para Tester:");
-               tipoOpcion = Integer.parseInt(scan.nextLine());
-          }
+          System.out.println("\n--- REGISTRO DE ADMINISTRADOR ---");
 
           System.out.println("Ingrese nombre:");
           String nombre = scan.nextLine();
           while (nombre.trim().isEmpty()) {
-               System.out.println("El nombre no puede estar vacío, ingrese nuevamente:");
+               System.out.println("El nombre no puede estar vacío:");
                nombre = scan.nextLine();
           }
 
           System.out.println("Ingrese apellido:");
           String apellido = scan.nextLine();
           while (apellido.trim().isEmpty()) {
-               System.out.println("El apellido no puede estar vacío, ingrese nuevamente:");
+               System.out.println("El apellido no puede estar vacío:");
                apellido = scan.nextLine();
           }
 
           System.out.println("Ingrese email:");
           String email = scan.nextLine();
           while (!email.contains("@") || existeEmail(email)) {
+
                if (existeEmail(email)) {
-                    System.out.println("El email ya esta registrado, ingrese otro:");
+                    System.out.println("El email ya está registrado:");
                } else {
-                    System.out.println("Formato email incorrecto, ingrese nuevamente el email:");
+                    System.out.println("Formato de email inválido:");
                }
+
                email = scan.nextLine();
           }
 
-          System.out.println("Ingrese pais:");
+          System.out.println("Ingrese país:");
           String pais = scan.nextLine();
           while (pais.trim().isEmpty()) {
-               System.out.println("El pais no puede estar vacío, ingrese nuevamente:");
+               System.out.println("El país no puede estar vacío:");
                pais = scan.nextLine();
           }
 
-          System.out.println("Ingrese contrasena:");
-          String contrasena = scan.nextLine();
-          while (contrasena.length() < 8) {
-               System.out.println("La contrasena debe tener al menos 8 caracteres, ingrese nuevamente:");
+          String contrasena;
+
+          do {
+               System.out.println("Ingrese contraseña:");
                contrasena = scan.nextLine();
-          }
 
-          if (tipoOpcion == 1) {
-               System.out.println("Ingrese nivel de acceso (Alto o Medio):");
-               String nivelAcceso = scan.nextLine();
-
-               while (!nivelAcceso.equalsIgnoreCase("Alto")
-                       && !nivelAcceso.equalsIgnoreCase("Medio")) {
-                    System.out.println("Ingrese un nivel de acceso válido (Alto o Medio):");
-                    nivelAcceso = scan.nextLine();
+               if (contrasena.length() < 8) {
+                    System.out.println("La contraseña debe tener al menos 8 caracteres.");
                }
 
-               registrarAdmin(nombre, apellido, email, pais, contrasena, nivelAcceso);
-               System.out.println("Administrador registrado con exito.");
+          } while (contrasena.length() < 8);
 
-          } else {
-               System.out.println("Ingrese tipo de tester (Junior, Senior o Lider):");
-               String tipoTester = scan.nextLine();
+          String repetirContrasena;
 
-               while (!tipoTester.equalsIgnoreCase("Junior")
-                       && !tipoTester.equalsIgnoreCase("Senior")
-                       && !tipoTester.equalsIgnoreCase("Lider")) {
-                    System.out.println("Ingrese un tipo de tester válido (Junior, Senior o Lider):");
-                    tipoTester = scan.nextLine();
+          do {
+
+               System.out.println("Repita la contraseña:");
+               repetirContrasena = scan.nextLine();
+
+               if (!contrasena.equals(repetirContrasena)) {
+                    System.out.println("Las contraseñas no coinciden.");
                }
 
-               registrarTester(nombre, apellido, email, pais, contrasena, tipoTester);
-               System.out.println("Tester registrado con exito.");
-          }
+          } while (!contrasena.equals(repetirContrasena));
+
+          registrarAdmin(nombre, apellido, email, pais, contrasena);
+
+          System.out.println("\nAdministrador registrado correctamente.");
+          menuUsuario();
+
+
      }
-}
+   }
