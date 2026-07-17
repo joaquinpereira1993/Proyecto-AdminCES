@@ -1,0 +1,469 @@
+<html>
+<head>
+<title>SistemaUsuarios.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+SistemaUsuarios.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">projectJava</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">ArrayList</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Scanner</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">SistemaUsuarios </span><span class="s2">{</span>
+
+     <span class="s0">private </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Usuario</span><span class="s2">&gt; </span><span class="s1">usuarios</span><span class="s2">;</span>
+     <span class="s0">private </span><span class="s1">Scanner scan</span><span class="s2">;</span>
+
+     <span class="s0">public </span><span class="s1">SistemaUsuarios</span><span class="s2">() {</span>
+          <span class="s1">usuarios </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;();</span>
+          <span class="s1">scan </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+          <span class="s1">cargarUsuariosPrueba</span><span class="s2">();</span>
+     <span class="s2">}</span>
+     <span class="s3">// Metodo para solicitar al usuario un número entero y valide que no esté vacío ni contenga caracteres inválidos, evitando que el programa se detenga.</span>
+     <span class="s3">// Si el dato es incorrecto, vuelve a solicitarlo hasta que sea válido</span>
+     <span class="s0">private int </span><span class="s1">leerEntero</span><span class="s2">(</span><span class="s1">String mensaje</span><span class="s2">) {</span>
+
+          <span class="s0">while </span><span class="s2">(</span><span class="s0">true</span><span class="s2">) {</span>
+
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">mensaje</span><span class="s2">);</span>
+
+               <span class="s1">String entrada </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">().</span><span class="s1">trim</span><span class="s2">();</span>
+
+               <span class="s0">if </span><span class="s2">(</span><span class="s1">entrada</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ingrese una opcion valida por favor&quot;</span><span class="s2">);</span>
+                    <span class="s0">continue</span><span class="s2">;</span>
+               <span class="s2">}</span>
+
+               <span class="s0">try </span><span class="s2">{</span>
+                    <span class="s0">return </span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">parseInt</span><span class="s2">(</span><span class="s1">entrada</span><span class="s2">);</span>
+               <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">NumberFormatException e</span><span class="s2">) {</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Debe ingresar un número válido.&quot;</span><span class="s2">);</span>
+               <span class="s2">}</span>
+          <span class="s2">}</span>
+     <span class="s2">}</span>
+
+     <span class="s3">// Usuarios precargados</span>
+     <span class="s0">private void </span><span class="s1">cargarUsuariosPrueba</span><span class="s2">() {</span>
+          <span class="s1">usuarios</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Admin</span><span class="s2">(</span><span class="s4">&quot;Carlos&quot;</span><span class="s2">, </span><span class="s4">&quot;Garcia&quot;</span><span class="s2">, </span><span class="s4">&quot;carlos@admin.com&quot;</span><span class="s2">, </span><span class="s4">&quot;Argentina&quot;</span><span class="s2">, </span><span class="s4">&quot;admin1234&quot;</span><span class="s2">));</span>
+          <span class="s1">usuarios</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Admin</span><span class="s2">(</span><span class="s4">&quot;Laura&quot;</span><span class="s2">, </span><span class="s4">&quot;Martinez&quot;</span><span class="s2">, </span><span class="s4">&quot;laura@admin.com&quot;</span><span class="s2">, </span><span class="s4">&quot;Colombia&quot;</span><span class="s2">, </span><span class="s4">&quot;admin5678&quot;</span><span class="s2">));</span>
+          <span class="s1">usuarios</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Admin</span><span class="s2">(</span><span class="s4">&quot;Juan&quot;</span><span class="s2">, </span><span class="s4">&quot;Perez&quot;</span><span class="s2">, </span><span class="s4">&quot;juan@admin.com&quot;</span><span class="s2">, </span><span class="s4">&quot;Bolivia&quot;</span><span class="s2">, </span><span class="s4">&quot;admin1993&quot;</span><span class="s2">));</span>
+          <span class="s1">usuarios</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Admin</span><span class="s2">(</span><span class="s4">&quot;Martin&quot;</span><span class="s2">, </span><span class="s4">&quot;Hernandez&quot;</span><span class="s2">, </span><span class="s4">&quot;martin@admin.com&quot;</span><span class="s2">, </span><span class="s4">&quot;Uruguay&quot;</span><span class="s2">, </span><span class="s4">&quot;admin1993&quot;</span><span class="s2">));</span>
+          <span class="s1">usuarios</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Tester</span><span class="s2">(</span><span class="s4">&quot;Joaquin&quot;</span><span class="s2">, </span><span class="s4">&quot;Pereira&quot;</span><span class="s2">, </span><span class="s4">&quot;joaquin@tester.com&quot;</span><span class="s2">, </span><span class="s4">&quot;Uruguay&quot;</span><span class="s2">, </span><span class="s4">&quot;tester456&quot;</span><span class="s2">, </span><span class="s4">&quot;Senior&quot;</span><span class="s2">));</span>
+          <span class="s1">usuarios</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Tester</span><span class="s2">(</span><span class="s4">&quot;Rodrigo&quot;</span><span class="s2">, </span><span class="s4">&quot;Gonzalez&quot;</span><span class="s2">, </span><span class="s4">&quot;rodrigo@tester.com&quot;</span><span class="s2">, </span><span class="s4">&quot;Brasil&quot;</span><span class="s2">, </span><span class="s4">&quot;tester789&quot;</span><span class="s2">, </span><span class="s4">&quot;Lider&quot;</span><span class="s2">));</span>
+          <span class="s1">usuarios</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Tester</span><span class="s2">(</span><span class="s4">&quot;Jose&quot;</span><span class="s2">, </span><span class="s4">&quot;Perez&quot;</span><span class="s2">, </span><span class="s4">&quot;jose@tester.com&quot;</span><span class="s2">, </span><span class="s4">&quot;Paraguay&quot;</span><span class="s2">, </span><span class="s4">&quot;tester123&quot;</span><span class="s2">, </span><span class="s4">&quot;Junior&quot;</span><span class="s2">));</span>
+          <span class="s1">usuarios</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Tester</span><span class="s2">(</span><span class="s4">&quot;Hugo&quot;</span><span class="s2">, </span><span class="s4">&quot;Fernandez&quot;</span><span class="s2">, </span><span class="s4">&quot;hugo@tester.com&quot;</span><span class="s2">, </span><span class="s4">&quot;Argentina&quot;</span><span class="s2">, </span><span class="s4">&quot;tester123&quot;</span><span class="s2">, </span><span class="s4">&quot;Junior&quot;</span><span class="s2">));</span>
+
+     <span class="s2">}</span>
+
+     <span class="s3">// Métodos públicos</span>
+     <span class="s0">public void </span><span class="s1">registrarAdmin</span><span class="s2">(</span><span class="s1">String nombre</span><span class="s2">, </span><span class="s1">String apellido</span><span class="s2">, </span><span class="s1">String email</span><span class="s2">, </span><span class="s1">String pais</span><span class="s2">, </span><span class="s1">String contrasena</span><span class="s2">) {</span>
+          <span class="s1">usuarios</span><span class="s2">.</span><span class="s1">add</span><span class="s2">( </span><span class="s0">new </span><span class="s1">Admin</span><span class="s2">(</span><span class="s1">nombre</span><span class="s2">, </span><span class="s1">apellido</span><span class="s2">, </span><span class="s1">email</span><span class="s2">, </span><span class="s1">pais</span><span class="s2">, </span><span class="s1">contrasena</span><span class="s2">));</span>
+     <span class="s2">}</span>
+
+     <span class="s0">public void </span><span class="s1">registrarTester</span><span class="s2">(</span><span class="s1">String nombre</span><span class="s2">, </span><span class="s1">String apellido</span><span class="s2">, </span><span class="s1">String email</span><span class="s2">, </span><span class="s1">String pais</span><span class="s2">, </span><span class="s1">String contrasena</span><span class="s2">, </span><span class="s1">String tipoTester</span><span class="s2">) {</span>
+          <span class="s1">usuarios</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Tester</span><span class="s2">(</span><span class="s1">nombre</span><span class="s2">, </span><span class="s1">apellido</span><span class="s2">, </span><span class="s1">email</span><span class="s2">, </span><span class="s1">pais</span><span class="s2">, </span><span class="s1">contrasena</span><span class="s2">, </span><span class="s1">tipoTester</span><span class="s2">));</span>
+     <span class="s2">}</span>
+
+     <span class="s0">public boolean </span><span class="s1">existeEmail</span><span class="s2">(</span><span class="s1">String email</span><span class="s2">) {</span>
+          <span class="s0">for </span><span class="s2">(</span><span class="s1">Usuario usuario </span><span class="s2">: </span><span class="s1">usuarios</span><span class="s2">) {</span>
+               <span class="s0">if </span><span class="s2">(</span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">getEmail</span><span class="s2">().</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s1">email</span><span class="s2">)) {</span>
+                    <span class="s0">return true</span><span class="s2">;</span>
+               <span class="s2">}</span>
+          <span class="s2">}</span>
+          <span class="s0">return false</span><span class="s2">;</span>
+     <span class="s2">}</span>
+
+     <span class="s0">private boolean </span><span class="s1">emailValido</span><span class="s2">(</span><span class="s1">String email</span><span class="s2">) {</span>
+
+          <span class="s1">String regex </span><span class="s2">= </span><span class="s4">&quot;^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+</span><span class="s0">\\</span><span class="s4">.[A-Za-z]{2,}$&quot;</span><span class="s2">;</span>
+
+          <span class="s0">return </span><span class="s1">email</span><span class="s2">.</span><span class="s1">matches</span><span class="s2">(</span><span class="s1">regex</span><span class="s2">);</span>
+     <span class="s2">}</span>
+     <span class="s0">private </span><span class="s1">String solicitarEmailValido</span><span class="s2">() {</span>
+          <span class="s1">String email</span><span class="s2">;</span>
+
+          <span class="s0">do </span><span class="s2">{</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ingrese email:&quot;</span><span class="s2">);</span>
+               <span class="s1">email </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">().</span><span class="s1">trim</span><span class="s2">();</span>
+
+               <span class="s0">if </span><span class="s2">(!</span><span class="s1">emailValido</span><span class="s2">(</span><span class="s1">email</span><span class="s2">)) {</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Formato de email inválido. Ejemplo: usuario@dominio.com&quot;</span><span class="s2">);</span>
+               <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">existeEmail</span><span class="s2">(</span><span class="s1">email</span><span class="s2">)) {</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ese email ya se encuentra registrado.&quot;</span><span class="s2">);</span>
+               <span class="s2">}</span>
+
+          <span class="s2">} </span><span class="s0">while </span><span class="s2">(!</span><span class="s1">emailValido</span><span class="s2">(</span><span class="s1">email</span><span class="s2">) || </span><span class="s1">existeEmail</span><span class="s2">(</span><span class="s1">email</span><span class="s2">));</span>
+
+          <span class="s0">return </span><span class="s1">email</span><span class="s2">;</span>
+     <span class="s2">}</span>
+
+     <span class="s0">public </span><span class="s1">Usuario buscarPorEmail</span><span class="s2">(</span><span class="s1">String email</span><span class="s2">) {</span>
+          <span class="s0">for </span><span class="s2">(</span><span class="s1">Usuario usuario </span><span class="s2">: </span><span class="s1">usuarios</span><span class="s2">) {</span>
+               <span class="s0">if </span><span class="s2">(</span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">getEmail</span><span class="s2">().</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s1">email</span><span class="s2">)) {</span>
+                    <span class="s0">return </span><span class="s1">usuario</span><span class="s2">;</span>
+               <span class="s2">}</span>
+          <span class="s2">}</span>
+          <span class="s0">return null</span><span class="s2">;</span>
+     <span class="s2">}</span>
+
+     <span class="s0">public </span><span class="s1">Usuario login</span><span class="s2">(</span><span class="s1">String email</span><span class="s2">, </span><span class="s1">String contrasena</span><span class="s2">) {</span>
+          <span class="s0">for </span><span class="s2">(</span><span class="s1">Usuario usuario </span><span class="s2">: </span><span class="s1">usuarios</span><span class="s2">) {</span>
+
+               <span class="s0">if </span><span class="s2">(</span><span class="s1">usuario </span><span class="s0">instanceof </span><span class="s1">Admin </span><span class="s2">&amp;&amp; </span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">getEmail</span><span class="s2">().</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s1">email</span><span class="s2">) &amp;&amp; </span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">getContrasena</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">contrasena</span><span class="s2">)) {</span>
+                    <span class="s0">return </span><span class="s1">usuario</span><span class="s2">;</span>
+               <span class="s2">}</span>
+          <span class="s2">}</span>
+
+          <span class="s0">return null</span><span class="s2">;</span>
+     <span class="s2">}</span>
+
+     <span class="s0">public void </span><span class="s1">listarUsuarios</span><span class="s2">() {</span>
+
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">--- Usuarios registrados en el sistema ---&quot;</span><span class="s2">);</span>
+
+          <span class="s0">int </span><span class="s1">contador </span><span class="s2">= </span><span class="s5">1</span><span class="s2">;</span>
+
+          <span class="s0">for </span><span class="s2">(</span><span class="s1">Usuario usuario </span><span class="s2">: </span><span class="s1">usuarios</span><span class="s2">) {</span>
+
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span>
+                       <span class="s1">contador </span><span class="s2">+ </span><span class="s4">&quot;. &quot;</span>
+                               <span class="s2">+ </span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">getNombre</span><span class="s2">() + </span><span class="s4">&quot; &quot;</span>
+                               <span class="s2">+ </span><span class="s4">&quot; | &quot;</span>
+                               <span class="s2">+ </span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">getApellido</span><span class="s2">()</span>
+                               <span class="s2">+ </span><span class="s4">&quot; | &quot;</span>
+                               <span class="s2">+ </span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">getEmail</span><span class="s2">()</span>
+                               <span class="s2">+ </span><span class="s4">&quot; | &quot;</span>
+                               <span class="s2">+ </span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">getPais</span><span class="s2">()</span>
+                               <span class="s2">+ </span><span class="s4">&quot; | &quot;</span>
+                               <span class="s2">+ </span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">mostrarRol</span><span class="s2">());</span>
+
+               <span class="s1">contador</span><span class="s2">++;</span>
+          <span class="s2">}</span>
+
+          <span class="s0">int </span><span class="s1">opcion</span><span class="s2">;</span>
+
+          <span class="s0">do </span><span class="s2">{</span>
+
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Opciones&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;1- Eliminar Tester&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;2- Volver&quot;</span><span class="s2">);</span>
+
+               <span class="s1">opcion </span><span class="s2">= </span><span class="s1">leerEntero</span><span class="s2">(</span><span class="s4">&quot;Seleccione una opción:&quot;</span><span class="s2">);</span>
+
+               <span class="s0">switch </span><span class="s2">(</span><span class="s1">opcion</span><span class="s2">) {</span>
+
+                    <span class="s0">case </span><span class="s5">1</span><span class="s2">:</span>
+                         <span class="s1">eliminarTester</span><span class="s2">();</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+
+                    <span class="s0">case </span><span class="s5">2</span><span class="s2">:</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+
+                    <span class="s0">default</span><span class="s2">:</span>
+                         <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Opción inválida.&quot;</span><span class="s2">);</span>
+               <span class="s2">}</span>
+
+          <span class="s2">} </span><span class="s0">while </span><span class="s2">(</span><span class="s1">opcion </span><span class="s2">!= </span><span class="s5">2</span><span class="s2">);</span>
+     <span class="s2">}</span>
+     <span class="s0">public void </span><span class="s1">eliminarTester</span><span class="s2">() {</span>
+
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Ingrese el email del tester que desea eliminar:&quot;</span><span class="s2">);</span>
+          <span class="s1">String email </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+          <span class="s1">Usuario usuario </span><span class="s2">= </span><span class="s1">buscarPorEmail</span><span class="s2">(</span><span class="s1">email</span><span class="s2">);</span>
+
+          <span class="s0">if </span><span class="s2">(</span><span class="s1">usuario </span><span class="s2">== </span><span class="s0">null</span><span class="s2">) {</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;No existe un usuario con ese email.&quot;</span><span class="s2">);</span>
+               <span class="s0">return</span><span class="s2">;</span>
+          <span class="s2">}</span>
+
+          <span class="s0">if </span><span class="s2">(</span><span class="s1">usuario </span><span class="s0">instanceof </span><span class="s1">Admin</span><span class="s2">) {</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;No es posible eliminar un administrador.&quot;</span><span class="s2">);</span>
+               <span class="s0">return</span><span class="s2">;</span>
+          <span class="s2">}</span>
+
+          <span class="s1">String opcion</span><span class="s2">;</span>
+
+          <span class="s0">do </span><span class="s2">{</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">¿Está seguro que desea eliminar al tester &quot; </span><span class="s2">+ </span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">getNombre</span><span class="s2">() + </span><span class="s4">&quot; &quot; </span><span class="s2">+ </span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">getApellido</span><span class="s2">() + </span><span class="s4">&quot;?&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;1- Sí&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;2- Cancelar&quot;</span><span class="s2">);</span>
+               <span class="s1">opcion </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+               <span class="s0">switch </span><span class="s2">(</span><span class="s1">opcion</span><span class="s2">) {</span>
+
+                    <span class="s0">case </span><span class="s4">&quot;1&quot;</span><span class="s2">:</span>
+                         <span class="s1">usuarios</span><span class="s2">.</span><span class="s1">remove</span><span class="s2">(</span><span class="s1">usuario</span><span class="s2">);</span>
+                         <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Tester eliminado correctamente.&quot;</span><span class="s2">);</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+
+                    <span class="s0">case </span><span class="s4">&quot;2&quot;</span><span class="s2">:</span>
+                         <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Operación cancelada.&quot;</span><span class="s2">);</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+
+                    <span class="s0">default</span><span class="s2">:</span>
+                         <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Opción inválida. Intente nuevamente.&quot;</span><span class="s2">);</span>
+               <span class="s2">}</span>
+
+          <span class="s2">} </span><span class="s0">while </span><span class="s2">(!</span><span class="s1">opcion</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s4">&quot;1&quot;</span><span class="s2">) &amp;&amp; !</span><span class="s1">opcion</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s4">&quot;2&quot;</span><span class="s2">));</span>
+     <span class="s2">}</span>
+     <span class="s0">public void </span><span class="s1">buscarUsuario</span><span class="s2">() {</span>
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ingrese email del usuario:&quot;</span><span class="s2">);</span>
+          <span class="s1">String email </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+          <span class="s1">Usuario usuario </span><span class="s2">= </span><span class="s1">buscarPorEmail</span><span class="s2">(</span><span class="s1">email</span><span class="s2">);</span>
+
+          <span class="s0">if </span><span class="s2">(</span><span class="s1">usuario </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Usuario encontrado&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Nombre: &quot; </span><span class="s2">+ </span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">getNombre</span><span class="s2">());</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Apellido: &quot; </span><span class="s2">+ </span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">getApellido</span><span class="s2">());</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Email: &quot; </span><span class="s2">+ </span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">getEmail</span><span class="s2">());</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Pais: &quot; </span><span class="s2">+ </span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">getPais</span><span class="s2">());</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Rol: &quot; </span><span class="s2">+ </span><span class="s1">usuario</span><span class="s2">.</span><span class="s1">mostrarRol</span><span class="s2">());</span>
+          <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Usuario no encontrado&quot;</span><span class="s2">);</span>
+          <span class="s2">}</span>
+     <span class="s2">}</span>
+
+     <span class="s3">// Menú y flujos de consola</span>
+     <span class="s0">public void </span><span class="s1">mostrarMenu</span><span class="s2">() {</span>
+          <span class="s0">int </span><span class="s1">opcion</span><span class="s2">;</span>
+          <span class="s0">do </span><span class="s2">{</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Menu Principal&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;1- Login&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;2- Registro&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;3- Salir&quot;</span><span class="s2">);</span>
+
+               <span class="s1">opcion </span><span class="s2">= </span><span class="s1">leerEntero</span><span class="s2">(</span><span class="s4">&quot;Seleccione una opción:&quot;</span><span class="s2">);</span>
+               <span class="s0">switch </span><span class="s2">(</span><span class="s1">opcion</span><span class="s2">) {</span>
+                    <span class="s0">case </span><span class="s5">1</span><span class="s2">:</span>
+                         <span class="s1">menuLogin</span><span class="s2">();</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+                    <span class="s0">case </span><span class="s5">2</span><span class="s2">:</span>
+                         <span class="s1">menuRegistro</span><span class="s2">();</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+                    <span class="s0">case </span><span class="s5">3</span><span class="s2">:</span>
+                         <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Saliendo...&quot;</span><span class="s2">);</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+                    <span class="s0">default</span><span class="s2">:</span>
+                         <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Opcion invalida&quot;</span><span class="s2">);</span>
+               <span class="s2">}</span>
+          <span class="s2">} </span><span class="s0">while </span><span class="s2">(</span><span class="s1">opcion </span><span class="s2">!= </span><span class="s5">3</span><span class="s2">);</span>
+     <span class="s2">}</span>
+
+     <span class="s0">public void </span><span class="s1">menuUsuarioAdmin</span><span class="s2">() {</span>
+          <span class="s0">int </span><span class="s1">opcion</span><span class="s2">;</span>
+
+          <span class="s0">do </span><span class="s2">{</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">--- MENU DE USUARIO ---&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;1- Registrar Tester&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;2- Listar usuarios&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;3- Buscar usuario&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;4- Cerrar sesión&quot;</span><span class="s2">);</span>
+
+               <span class="s1">opcion </span><span class="s2">= </span><span class="s1">leerEntero</span><span class="s2">(</span><span class="s4">&quot;Seleccione una opción:&quot;</span><span class="s2">);</span>
+               <span class="s0">switch </span><span class="s2">(</span><span class="s1">opcion</span><span class="s2">) {</span>
+                    <span class="s0">case </span><span class="s5">1</span><span class="s2">:</span>
+                         <span class="s1">menuRegistroTester</span><span class="s2">();</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+
+                    <span class="s0">case </span><span class="s5">2</span><span class="s2">:</span>
+                         <span class="s1">listarUsuarios</span><span class="s2">();</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+
+                    <span class="s0">case </span><span class="s5">3</span><span class="s2">:</span>
+                         <span class="s1">buscarUsuario</span><span class="s2">();</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+
+                    <span class="s0">case </span><span class="s5">4</span><span class="s2">:</span>
+                         <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Sesión finalizada.&quot;</span><span class="s2">);</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+
+                    <span class="s0">default</span><span class="s2">:</span>
+                         <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Opción inválida.&quot;</span><span class="s2">);</span>
+               <span class="s2">}</span>
+
+          <span class="s2">} </span><span class="s0">while </span><span class="s2">(</span><span class="s1">opcion </span><span class="s2">!= </span><span class="s5">4</span><span class="s2">);</span>
+     <span class="s2">}</span>
+     <span class="s0">private void </span><span class="s1">menuRegistroTester</span><span class="s2">() {</span>
+
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">--- REGISTRO DE TESTER ---&quot;</span><span class="s2">);</span>
+
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ingrese nombre:&quot;</span><span class="s2">);</span>
+          <span class="s1">String nombre </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+          <span class="s0">while </span><span class="s2">(</span><span class="s1">nombre</span><span class="s2">.</span><span class="s1">trim</span><span class="s2">().</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;El nombre no puede estar vacío:&quot;</span><span class="s2">);</span>
+               <span class="s1">nombre </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+          <span class="s2">}</span>
+
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ingrese apellido:&quot;</span><span class="s2">);</span>
+          <span class="s1">String apellido </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+          <span class="s0">while </span><span class="s2">(</span><span class="s1">apellido</span><span class="s2">.</span><span class="s1">trim</span><span class="s2">().</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;El apellido no puede estar vacío:&quot;</span><span class="s2">);</span>
+               <span class="s1">apellido </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+          <span class="s2">}</span>
+
+          <span class="s1">String email </span><span class="s2">= </span><span class="s1">solicitarEmailValido</span><span class="s2">(); </span><span class="s3">// Para evitar duplicado en el codigo en el registro de un tester</span>
+
+          <span class="s1">String pais </span><span class="s2">= </span><span class="s4">&quot;&quot;</span><span class="s2">;</span>
+
+          <span class="s0">int </span><span class="s1">opcionPais</span><span class="s2">;</span>
+
+          <span class="s0">do </span><span class="s2">{</span>
+
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Seleccione el país:&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;1- Paraguay&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;2- Uruguay&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;3- Argentina&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;4- Brasil&quot;</span><span class="s2">);</span>
+
+               <span class="s1">opcionPais </span><span class="s2">= </span><span class="s1">leerEntero</span><span class="s2">(</span><span class="s4">&quot;Seleccione el país de la lista:&quot;</span><span class="s2">);</span>
+
+               <span class="s0">switch </span><span class="s2">(</span><span class="s1">opcionPais</span><span class="s2">) {</span>
+
+                    <span class="s0">case </span><span class="s5">1</span><span class="s2">:</span>
+                         <span class="s1">pais </span><span class="s2">= </span><span class="s4">&quot;Paraguay&quot;</span><span class="s2">;</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+
+                    <span class="s0">case </span><span class="s5">2</span><span class="s2">:</span>
+                         <span class="s1">pais </span><span class="s2">= </span><span class="s4">&quot;Uruguay&quot;</span><span class="s2">;</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+
+                    <span class="s0">case </span><span class="s5">3</span><span class="s2">:</span>
+                         <span class="s1">pais </span><span class="s2">= </span><span class="s4">&quot;Argentina&quot;</span><span class="s2">;</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+
+                    <span class="s0">case </span><span class="s5">4</span><span class="s2">:</span>
+                         <span class="s1">pais </span><span class="s2">= </span><span class="s4">&quot;Brasil&quot;</span><span class="s2">;</span>
+                         <span class="s0">break</span><span class="s2">;</span>
+
+                    <span class="s0">default</span><span class="s2">:</span>
+                         <span class="s1">pais </span><span class="s2">= </span><span class="s4">&quot;&quot;</span><span class="s2">;</span>
+                         <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Opción inválida. Intente nuevamente.&quot;</span><span class="s2">);</span>
+               <span class="s2">}</span>
+
+          <span class="s2">} </span><span class="s0">while </span><span class="s2">(</span><span class="s1">pais</span><span class="s2">.</span><span class="s1">trim</span><span class="s2">().</span><span class="s1">isEmpty</span><span class="s2">());</span>
+
+
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ingrese contraseña:&quot;</span><span class="s2">);</span>
+          <span class="s1">String contrasena </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+          <span class="s0">while </span><span class="s2">(</span><span class="s1">contrasena</span><span class="s2">.</span><span class="s1">length</span><span class="s2">() &lt; </span><span class="s5">5</span><span class="s2">) {</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;La contraseña debe tener al menos 5 caracteres:&quot;</span><span class="s2">);</span>
+               <span class="s1">contrasena </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+          <span class="s2">}</span>
+
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ingrese tipo de tester (Junior, Senior o Lider):&quot;</span><span class="s2">);</span>
+          <span class="s1">String tipoTester </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+          <span class="s0">while </span><span class="s2">(!</span><span class="s1">tipoTester</span><span class="s2">.</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s4">&quot;Junior&quot;</span><span class="s2">)</span>
+                  <span class="s2">&amp;&amp; !</span><span class="s1">tipoTester</span><span class="s2">.</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s4">&quot;Senior&quot;</span><span class="s2">)</span>
+                  <span class="s2">&amp;&amp; !</span><span class="s1">tipoTester</span><span class="s2">.</span><span class="s1">equalsIgnoreCase</span><span class="s2">(</span><span class="s4">&quot;Lider&quot;</span><span class="s2">)) {</span>
+
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ingrese un tipo válido (Junior, Senior o Lider):&quot;</span><span class="s2">);</span>
+               <span class="s1">tipoTester </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+          <span class="s2">}</span>
+
+          <span class="s1">registrarTester</span><span class="s2">(</span><span class="s1">nombre</span><span class="s2">, </span><span class="s1">apellido</span><span class="s2">, </span><span class="s1">email</span><span class="s2">, </span><span class="s1">pais</span><span class="s2">, </span><span class="s1">contrasena</span><span class="s2">, </span><span class="s1">tipoTester</span><span class="s2">);</span>
+
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Tester registrado correctamente.&quot;</span><span class="s2">);</span>
+     <span class="s2">}</span>
+
+     <span class="s3">// Condiciones lógicas del sistema</span>
+     <span class="s0">private void </span><span class="s1">menuLogin</span><span class="s2">() {</span>
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ingrese email:&quot;</span><span class="s2">);</span>
+          <span class="s1">String emailIngresado </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ingrese contrasena:&quot;</span><span class="s2">);</span>
+          <span class="s1">String contrasenaIngresada </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+          <span class="s1">Usuario resultado </span><span class="s2">= </span><span class="s1">login</span><span class="s2">(</span><span class="s1">emailIngresado</span><span class="s2">, </span><span class="s1">contrasenaIngresada</span><span class="s2">);</span>
+
+          <span class="s0">if </span><span class="s2">(</span><span class="s1">resultado </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Login exitoso.&quot;</span><span class="s2">);</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Bienvenido &quot; </span><span class="s2">+ </span><span class="s1">resultado</span><span class="s2">.</span><span class="s1">getNombre</span><span class="s2">());</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s1">resultado</span><span class="s2">.</span><span class="s1">mostrarRol</span><span class="s2">());</span>
+
+               <span class="s1">menuUsuarioAdmin</span><span class="s2">();</span>
+          <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Error. Ingrese un usuario de tipo Administrador&quot;</span><span class="s2">);</span>
+          <span class="s2">}</span>
+     <span class="s2">}</span>
+
+     <span class="s0">private void </span><span class="s1">menuRegistro</span><span class="s2">() {</span>
+
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">--- REGISTRO DE ADMINISTRADOR ---&quot;</span><span class="s2">);</span>
+
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ingrese nombre:&quot;</span><span class="s2">);</span>
+          <span class="s1">String nombre </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+          <span class="s0">while </span><span class="s2">(</span><span class="s1">nombre</span><span class="s2">.</span><span class="s1">trim</span><span class="s2">().</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;El nombre no puede estar vacío:&quot;</span><span class="s2">);</span>
+               <span class="s1">nombre </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+          <span class="s2">}</span>
+
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ingrese apellido:&quot;</span><span class="s2">);</span>
+          <span class="s1">String apellido </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+          <span class="s0">while </span><span class="s2">(</span><span class="s1">apellido</span><span class="s2">.</span><span class="s1">trim</span><span class="s2">().</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;El apellido no puede estar vacío:&quot;</span><span class="s2">);</span>
+               <span class="s1">apellido </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+          <span class="s2">}</span>
+
+          <span class="s1">String email </span><span class="s2">= </span><span class="s1">solicitarEmailValido</span><span class="s2">(); </span><span class="s3">//Para evitar duplicados de codigo de un registro de administrador</span>
+
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ingrese país:&quot;</span><span class="s2">);</span>
+          <span class="s1">String pais </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+          <span class="s0">while </span><span class="s2">(</span><span class="s1">pais</span><span class="s2">.</span><span class="s1">trim</span><span class="s2">().</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;El país no puede estar vacío:&quot;</span><span class="s2">);</span>
+               <span class="s1">pais </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+          <span class="s2">}</span>
+
+          <span class="s1">String contrasena</span><span class="s2">;</span>
+
+          <span class="s0">do </span><span class="s2">{</span>
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Ingrese contraseña:&quot;</span><span class="s2">);</span>
+               <span class="s1">contrasena </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+               <span class="s0">if </span><span class="s2">(</span><span class="s1">contrasena</span><span class="s2">.</span><span class="s1">length</span><span class="s2">() &lt; </span><span class="s5">5</span><span class="s2">) {</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;La contraseña debe tener al menos 5 caracteres.&quot;</span><span class="s2">);</span>
+               <span class="s2">}</span>
+
+          <span class="s2">} </span><span class="s0">while </span><span class="s2">(</span><span class="s1">contrasena</span><span class="s2">.</span><span class="s1">length</span><span class="s2">() &lt; </span><span class="s5">5</span><span class="s2">);</span>
+
+          <span class="s1">String repetirContrasena</span><span class="s2">;</span>
+
+          <span class="s0">do </span><span class="s2">{</span>
+
+               <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Repita la contraseña:&quot;</span><span class="s2">);</span>
+               <span class="s1">repetirContrasena </span><span class="s2">= </span><span class="s1">scan</span><span class="s2">.</span><span class="s1">nextLine</span><span class="s2">();</span>
+
+               <span class="s0">if </span><span class="s2">(!</span><span class="s1">contrasena</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">repetirContrasena</span><span class="s2">)) {</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Las contraseñas no coinciden.&quot;</span><span class="s2">);</span>
+               <span class="s2">}</span>
+
+          <span class="s2">} </span><span class="s0">while </span><span class="s2">(!</span><span class="s1">contrasena</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">repetirContrasena</span><span class="s2">));</span>
+
+          <span class="s1">registrarAdmin</span><span class="s2">(</span><span class="s1">nombre</span><span class="s2">, </span><span class="s1">apellido</span><span class="s2">, </span><span class="s1">email</span><span class="s2">, </span><span class="s1">pais</span><span class="s2">, </span><span class="s1">contrasena</span><span class="s2">);</span>
+
+          <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Administrador registrado correctamente.&quot;</span><span class="s2">);</span>
+          <span class="s1">menuUsuarioAdmin</span><span class="s2">();</span>
+
+
+     <span class="s2">}</span>
+   <span class="s2">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Tester.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Tester.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">projectJava</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">Tester </span><span class="s0">extends </span><span class="s1">Usuario </span><span class="s2">{</span>
+
+    <span class="s0">private </span><span class="s1">String tipoTester</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">Tester</span><span class="s2">(</span><span class="s1">String nombre</span><span class="s2">,</span>
+                  <span class="s1">String apellido</span><span class="s2">,</span>
+                  <span class="s1">String email</span><span class="s2">,</span>
+                  <span class="s1">String pais</span><span class="s2">,</span>
+                  <span class="s1">String contrasena</span><span class="s2">,</span>
+                  <span class="s1">String tipoTester</span><span class="s2">)</span>
+    <span class="s2">{</span>
+        <span class="s0">super</span><span class="s2">(</span><span class="s1">nombre</span><span class="s2">, </span><span class="s1">apellido</span><span class="s2">, </span><span class="s1">email</span><span class="s2">, </span><span class="s1">pais</span><span class="s2">, </span><span class="s1">contrasena</span><span class="s2">);</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">tipoTester </span><span class="s2">= </span><span class="s1">TipoTester</span><span class="s2">(</span><span class="s1">tipoTester</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">String getTipoTester</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">tipoTester</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">setTipoTester</span><span class="s2">(</span><span class="s1">String tipoTester</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">tipoTester </span><span class="s2">= </span><span class="s1">TipoTester</span><span class="s2">(</span><span class="s1">tipoTester</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String mostrarRol</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s3">&quot;Tester - Tipo: &quot; </span><span class="s2">+ </span><span class="s1">tipoTester</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private </span><span class="s1">String TipoTester</span><span class="s2">(</span><span class="s1">String tipoTester</span><span class="s2">) {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">tipoTester </span><span class="s2">== </span><span class="s0">null </span><span class="s2">|| </span><span class="s1">tipoTester</span><span class="s2">.</span><span class="s1">trim</span><span class="s2">().</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+            <span class="s0">return </span><span class="s1">tipoTester</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s1">tipoTester </span><span class="s2">= </span><span class="s1">tipoTester</span><span class="s2">.</span><span class="s1">trim</span><span class="s2">().</span><span class="s1">toLowerCase</span><span class="s2">();</span>
+
+        <span class="s0">return </span><span class="s1">tipoTester</span><span class="s2">.</span><span class="s1">substring</span><span class="s2">(</span><span class="s4">0</span><span class="s2">, </span><span class="s4">1</span><span class="s2">).</span><span class="s1">toUpperCase</span><span class="s2">() + </span><span class="s1">tipoTester</span><span class="s2">.</span><span class="s1">substring</span><span class="s2">(</span><span class="s4">1</span><span class="s2">);</span>
+    <span class="s2">}</span>
+<span class="s2">}</span></pre>
+</body>
+</html>
