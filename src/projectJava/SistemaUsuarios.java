@@ -1,12 +1,12 @@
 package projectJava;
 
-import projectJava.excepciones.DatosInvalidosException;
-import projectJava.excepciones.EmailDuplicadoException; // Excepción personalizada que se lanza cuando se intenta registrar un email que ya existe.
-import projectJava.excepciones.UsuarioNoEncontradoException;
+import projectJava.excepciones.DatosInvalidosException; // Se usa cuando los datos ingresados por el usuario no cumplen con las validaciones requeridas
+import projectJava.excepciones.EmailDuplicadoException; // Se usa cuando se intenta registrar un email que ya se encuentra en el sistema
+import projectJava.excepciones.UsuarioNoEncontradoException; // Se utiliza cuando no se encuentra un usuario con el email ingresado
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.ArrayList; // Permite trabajar con listas dinámicas de usuarios.
+import java.util.List; // Permite declarar listas de usuarios.
+import java.util.Scanner; // Permite leer los datos ingresados por el usuario desde la consola.
 
 public class SistemaUsuarios {
 
@@ -29,8 +29,8 @@ public class SistemaUsuarios {
 
           return instancia;
      }
-     // Metodo para solicitar al usuario un número entero y valide que no esté vacío ni contenga caracteres inválidos, evitando que el programa se detenga.
-     // Si el dato es incorrecto, vuelve a solicitarlo hasta que sea válido
+     // Metodo para solicitar un número entero y valide que el dato ingresado sea correcto.
+     // Si el dato es incorrecto, se vuelve a solicitarlo hasta que sea válido
      private int leerEntero(String mensaje) {
 
           while (true) {
@@ -52,7 +52,7 @@ public class SistemaUsuarios {
           }
      }
 
-     // Usuarios precargados
+     // Usuarios precargados en el sistema
      private void cargarUsuariosPrueba() {
           usuarios.add(new Admin("Carlos", "Garcia", "carlos@admin.com", "Argentina", "admin1234"));
           usuarios.add(new Admin("Laura", "Martinez", "laura@admin.com", "Colombia", "admin5678"));
@@ -66,6 +66,7 @@ public class SistemaUsuarios {
      }
 
      // Métodos públicos
+
      public void registrarAdmin(String nombre, String apellido, String email,String pais, String contrasena)
              throws DatosInvalidosException, EmailDuplicadoException {
           // Verifica que los datos obligatorios sean válidos.
