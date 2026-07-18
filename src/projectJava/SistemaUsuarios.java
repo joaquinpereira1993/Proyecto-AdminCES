@@ -29,8 +29,8 @@ public class SistemaUsuarios {
 
           return instancia;
      }
-     // Metodo para solicitar un número entero y valide que el dato ingresado sea correcto.
-     // Si el dato es incorrecto, se vuelve a solicitarlo hasta que sea válido
+    // Metodo que solicita un número entero y valida el dato ingresado.
+    // Si el dato es incorrecto, vuelve a solicitarlo.
      private int leerEntero(String mensaje) {
 
           while (true) {
@@ -61,7 +61,7 @@ public class SistemaUsuarios {
           usuarios.add(new Tester("Joaquin", "Pereira", "joaquin@tester.com", "Uruguay", "tester456", "Senior"));
           usuarios.add(new Tester("Rodrigo", "Gonzalez", "rodrigo@tester.com", "Brasil", "tester789", "Lider"));
           usuarios.add(new Tester("Jose", "Perez", "jose@tester.com", "Paraguay", "tester123", "Junior"));
-          usuarios.add(new Tester("Hugo", "Fernandez", "hugo@tester.com", "Argentina", "tester123", "Junior"));
+          usuarios.add(new Tester("Hugo", "Fernandez", "hugo@tester.com", "Argentina", "tester345", "Junior"));
 
      }
 
@@ -71,6 +71,10 @@ public class SistemaUsuarios {
              throws DatosInvalidosException, EmailDuplicadoException {
           // Verifica que los datos obligatorios sean válidos.
           validarDatosUsuario(nombre, apellido, pais, contrasena);
+
+         if (!emailValido(email)) {
+             throw new DatosInvalidosException("El formato del email no es válido.");
+         }
           // Comprueba que el email no pertenezca a otro usuario registrado.
           if (existeEmail(email)) {
                throw new EmailDuplicadoException("El email ya se encuentra registrado.");
@@ -80,36 +84,54 @@ public class SistemaUsuarios {
           usuarios.add(new Admin(nombre, apellido, email, pais, contrasena));
      }
 
-     public void registrarTester(String nombre, String apellido, String email,
-                                 String pais, String contrasena, String tipoTester)
-             throws DatosInvalidosException, EmailDuplicadoException { // Verifica que los datos obligatorios sean válidos.
-          validarDatosUsuario(nombre, apellido, pais, contrasena);
-          if (existeEmail(email)) { // Evita registrar dos usuarios con el mismo email.
-               throw new EmailDuplicadoException("El email ya se encuentra registrado.");
-          }
-          // Agrega el nuevo tester a la lista de usuarios.
-          usuarios.add(new Tester(nombre, apellido, email, pais, contrasena, tipoTester));
-     }
-     public boolean existeEmail(String email) { // Recorre la lista para verificar si el email ya fue registrado.
-          for (Usuario usuario : usuarios) {
-               if (usuario.getEmail().equalsIgnoreCase(email)) {
-                    return true;
-               }
-          }
-          return false;
-     }
+    public void registrarTester(String nombre, String apellido, String email, String pais, String contrasena, String tipoTester)
+            throws DatosInvalidosException, EmailDuplicadoException {
+         validarDatosUsuario(nombre, apellido, pais, contrasena);
 
-     private boolean emailValido(String email) { // Valida que el email tenga un formato correcto utilizando una expresión regular.
+        if (!emailValido(email)) {
+            throw new DatosInvalidosException("El formato del email no es válido.");
+        }
 
-          String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        if (tipoTester == null || (!tipoTester.equalsIgnoreCase("Junior")
+                && !tipoTester.equalsIgnoreCase("Senior")
+                && !tipoTester.equalsIgnoreCase("Lider"))) {
 
-          return email.matches(regex);
-     }
-     private String solicitarEmailValido() {
+            throw new DatosInvalidosException("El tipo de tester debe ser Junior, Senior o Lider.");
+        }
+
+        if (existeEmail(email)) {
+            throw new EmailDuplicadoException("El email ya se encuentra registrado.");
+        }
+
+        usuarios.add(
+                new Tester(nombre.trim(), apellido.trim(), email.trim(), pais.trim(), contrasena, tipoTester.trim()
+                )
+        );
+    }
+    public boolean existeEmail(String email) {
+
+        if (email == null) {
+            return false;
+        }
+        for (Usuario usuario : usuarios) {
+            if (usuario.getEmail().equalsIgnoreCase(email.trim())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    // Valida que el email tenga un formato correcto utilizando una expresión regular.
+    private boolean emailValido(String email) {
+        if (email == null) {
+            return false;
+        }
+        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        return email.trim().matches(regex);
+    }
+     private String solicitarEmailValido() { // Solicita el email hasta que el formato ingresado sea válido.
 
           String email;
 
-          // Solicita el email hasta que el formato ingresado sea válido.
           // La verificación de emails duplicados se realiza durante el registro.
           do {
 
@@ -141,25 +163,51 @@ public class SistemaUsuarios {
                throw new DatosInvalidosException("El país no puede estar vacío.");
           }
 
-          if (contrasena == null || contrasena.length() < 5) {
-               throw new DatosInvalidosException(
-                       "La contraseña debe tener al menos 5 caracteres.");
-          }
+         if (contrasena == null || contrasena.trim().length() < 5) {
+             throw new DatosInvalidosException("La contraseña debe tener al menos 5 caracteres.");
+         }
      }
-     public Usuario buscarPorEmail(String email) throws UsuarioNoEncontradoException {
+    public Usuario buscarPorEmail(String email)
+            throws UsuarioNoEncontradoException {
 
-// Busca un usuario por su email dentro de la colección.
-          for (Usuario usuario : usuarios) {
-               if (usuario.getEmail().equalsIgnoreCase(email)) {
+        if (email != null) {
+
+            for (Usuario usuario : usuarios) {
+
+                if (usuario.getEmail().equalsIgnoreCase(email.trim())) {
                     return usuario;
-               }
-          }
-// Si no encuentra coincidencias, informa el error mediante una excepción personalizada.
-          throw new UsuarioNoEncontradoException(
-                  "No existe un usuario registrado con el email: " + email);
-     }
+                }
+            }
+        }
+        throw new UsuarioNoEncontradoException("No existe un usuario registrado con el email: " + email);
+    }
+    public void reiniciarContrasena(String email, String nuevaContrasena)
+            throws UsuarioNoEncontradoException, DatosInvalidosException {
 
-     public Usuario login(String email, String contrasena) {
+        // Busca el usuario por email.
+        Usuario usuario = buscarPorEmail(email);
+
+        // Solo permite reiniciar contraseñas de administradores.
+        if (!(usuario instanceof Admin)) {
+
+            throw new DatosInvalidosException(
+                    "Solo es posible reiniciar la contraseña " + "de usuarios administradores."
+            );
+        }
+
+        // Valida la nueva contraseña.
+        if (nuevaContrasena == null
+                || nuevaContrasena.trim().length() < 5) {
+
+            throw new DatosInvalidosException(
+                    "La contraseña debe tener al menos 5 caracteres."
+            );
+        }
+
+        // Guarda la nueva contraseña.
+        usuario.setContrasena(nuevaContrasena);
+    }
+    public Usuario login(String email, String contrasena) {
 // Verifica que exista un administrador con el email y contraseña ingresados.
           for (Usuario usuario : usuarios) {
 
@@ -287,66 +335,91 @@ public class SistemaUsuarios {
      }
 
 // Menú principal del sistema.
-// Permite iniciar sesión, registrar administradores o salir de la aplicación.
-     public void mostrarMenu() {
-          int opcion;
-          do {
-               System.out.println("\nMenu Principal");
-               System.out.println("1- Login");
-               System.out.println("2- Registro");
-               System.out.println("3- Salir");
+// Permite iniciar sesión, registrar administradores, reiniciar contraseña o salir del sistema.
+public void mostrarMenu() {
 
-               opcion = leerEntero("Seleccione una opción:");
-               switch (opcion) {
-                    case 1:
-                         menuLogin();
-                         break;
-                    case 2:
-                         menuRegistroAdmin();
-                         break;
-                    case 3:
-                         System.out.println("Saliendo...");
-                         break;
-                    default:
-                         System.out.println("Opcion invalida");
-               }
-          } while (opcion != 3);
-     }
+    int opcion;
 
-     public void menuUsuarioAdmin() { // Menú disponible para los administradores una vez que inician sesión.
-          int opcion;
+    do {
 
-          do {
-               System.out.println("\n--- MENU DE USUARIO ---");
-               System.out.println("1- Registrar Tester");
-               System.out.println("2- Listar usuarios");
-               System.out.println("3- Buscar usuario");
-               System.out.println("4- Cerrar sesión");
+        System.out.println("\nMENU PRINCIPAL");
+        System.out.println("1- Login");
+        System.out.println("2- Registro");
+        System.out.println("3- Reiniciar contraseña");
+        System.out.println("4- Salir");
 
-               opcion = leerEntero("Seleccione una opción:");
-               switch (opcion) {
-                    case 1:
-                         menuRegistroTester();
-                         break;
+        opcion = leerEntero("Seleccione una opción:");
 
-                    case 2:
-                         listarUsuarios();
-                         break;
+        switch (opcion) {
 
-                    case 3:
-                         buscarUsuario();
-                         break;
+            case 1:
+                menuLogin();
+                break;
 
-                    case 4:
-                         System.out.println("Sesión finalizada.");
-                         break;
+            case 2:
+                menuRegistroAdmin();
+                break;
 
-                    default:
-                         System.out.println("Opción inválida.");
-               }
+            case 3:
+                menuReiniciarContrasena();
+                break;
 
-          } while (opcion != 4);
-     }
+            case 4:
+                System.out.println("Saliendo...");
+                break;
+
+            default:
+                System.out.println("Opción inválida.");
+        }
+
+    } while (opcion != 4);
+
+}
+    // Menú disponible para los administradores una vez que inician sesión.
+    public void menuUsuarioAdmin() {
+
+        int opcion;
+
+        do {
+
+            System.out.println("\n--- MENU DE USUARIO ---");
+            System.out.println("1- Registrar Tester");
+            System.out.println("2- Listar usuarios");
+            System.out.println("3- Buscar usuario");
+            System.out.println("4- Reiniciar contraseña");
+            System.out.println("5- Cerrar sesión");
+
+            opcion = leerEntero("Seleccione una opción:");
+
+            switch (opcion) {
+
+                case 1:  // Permite registrar un nuevo usuario de tipo Tester.
+                    menuRegistroTester();
+                    break;
+
+                case 2: // Muestra todos los usuarios registrados en el sistema.
+
+                    listarUsuarios();
+                    break;
+
+                case 3:  // Permite buscar un usuario a partir de su email.
+                    buscarUsuario();
+                    break;
+
+                case 4: // Permite reiniciar la contraseña de un usuario administrador.
+                    menuReiniciarContrasena();
+                    break;
+
+                case 5: // Finaliza la sesión del administrador.
+                    System.out.println("Sesión finalizada.");
+                    break;
+
+                default:
+                    System.out.println("Opción inválida.");
+            }
+// El menú se mantiene activo hasta que el administrador decida cerrar sesión.
+        } while (opcion != 5);
+    }
 // Solicita los datos necesarios para registrar un nuevo tester realizando todas las validaciones correspondientes.
      private void menuRegistroTester() {
 
@@ -411,10 +484,10 @@ public class SistemaUsuarios {
           System.out.println("Ingrese contraseña:");
           String contrasena = scan.nextLine();
 
-          while (contrasena.length() < 5) {
-               System.out.println("La contraseña debe tener al menos 5 caracteres:");
-               contrasena = scan.nextLine();
-          }
+         while (contrasena.trim().length() < 5) {
+             System.out.println("La contraseña debe tener al menos 5 caracteres:");
+             contrasena = scan.nextLine();
+         }
 
           System.out.println("Ingrese tipo de tester (Junior, Senior o Lider):");
           String tipoTester = scan.nextLine();
@@ -444,7 +517,7 @@ public class SistemaUsuarios {
           System.out.println("Ingrese email:");
           String emailIngresado = scan.nextLine();
 
-          System.out.println("Ingrese contrasena:");
+          System.out.println("Ingrese contraseña:");
           String contrasenaIngresada = scan.nextLine();
 
           Usuario resultado = login(emailIngresado, contrasenaIngresada);
@@ -459,7 +532,85 @@ public class SistemaUsuarios {
                System.out.println("Error. Ingrese un usuario de tipo Administrador");
           }
      }
-// Solicita los datos necesarios para registrar un nuevo administrador validando que la información ingresada sea correcta.
+    // Solicita los datos para reiniciar la contraseña de un administrador.
+    private void menuReiniciarContrasena() {
+
+        System.out.println("\n--- REINICIAR CONTRASEÑA ---");
+
+        // Solicita un email con formato válido.
+        String email = solicitarEmailValido();
+
+        // Solicita la nueva contraseña.
+        System.out.println("Ingrese la nueva contraseña:");
+        String nuevaContrasena = scan.nextLine();
+
+        // Valida que tenga al menos 5 caracteres.
+        while (nuevaContrasena.trim().length() < 5) {
+
+            System.out.println(
+                    "La contraseña debe tener al menos 5 caracteres:"
+            );
+
+            nuevaContrasena = scan.nextLine();
+        }
+
+        // Solicita repetir la nueva contraseña.
+        System.out.println("Repita la nueva contraseña:");
+        String repetirContrasena = scan.nextLine();
+
+        // Verifica que ambas contraseñas coincidan.
+        while (!nuevaContrasena.equals(repetirContrasena)) {
+
+            System.out.println("Las contraseñas no coinciden.");
+            System.out.println("Repita la nueva contraseña:");
+
+            repetirContrasena = scan.nextLine();
+        }
+
+        int opcion;
+
+        do {
+
+            // Muestra las opciones después de completar el formulario.
+            System.out.println("\n1- Confirmar");
+            System.out.println("2- Atrás");
+
+            opcion = leerEntero("Seleccione una opción:");
+
+            switch (opcion) {
+
+                case 1:
+
+                    try {
+
+                        reiniciarContrasena(email, nuevaContrasena);
+
+                        System.out.println(
+                                "\nContraseña actualizada correctamente."
+                        );
+
+                    } catch (UsuarioNoEncontradoException | DatosInvalidosException e) {
+
+                        System.out.println(e.getMessage());
+                    }
+
+                    break;
+
+                case 2:
+
+                    System.out.println("\nOperación cancelada.");
+                    break;
+
+                default:
+
+                    System.out.println(
+                            "Opción inválida. Intente nuevamente."
+                    );
+            }
+
+        } while (opcion != 1 && opcion != 2);
+    }
+    // Solicita y valida los datos para registrar un administrador.
      private void menuRegistroAdmin() {
 
           System.out.println("\n--- REGISTRO DE ADMINISTRADOR ---");
@@ -493,11 +644,11 @@ public class SistemaUsuarios {
                System.out.println("Ingrese contraseña:");
                contrasena = scan.nextLine();
 
-               if (contrasena.length() < 5) {
-                    System.out.println("La contraseña debe tener al menos 5 caracteres.");
-               }
+              if (contrasena.trim().length() < 5) {
+                  System.out.println("La contraseña debe tener al menos 5 caracteres.");
+              }
 
-          } while (contrasena.length() < 5);
+          } while (contrasena.trim().length() < 5);
 
           String repetirContrasena;
 
@@ -511,14 +662,13 @@ public class SistemaUsuarios {
                }
 
           } while (!contrasena.equals(repetirContrasena));
-// Intenta registrar el administrador.
-// Si ocurre un error de validación, se muestra el mensaje correspondiente.
+    // Intenta registrar el administrador.
+    // Si ocurre un error de validación, se muestra el mensaje correspondiente.
           try {
 
                registrarAdmin(nombre, apellido, email, pais, contrasena);
 
                System.out.println("\nAdministrador registrado correctamente.");
-               menuUsuarioAdmin();
 
           // Captura tanto errores de validación como intentos de registrar un email ya existente.
           } catch (DatosInvalidosException | EmailDuplicadoException e) {

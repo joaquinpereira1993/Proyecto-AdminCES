@@ -67,7 +67,7 @@ public abstract class Usuario {
      }
 
      // Modifica la contraseña del usuario.
-     public void setContrasena(String contrasena) {
+     public void setContrasena(String contrasena){
           this.contrasena = contrasena;
      }
 }
